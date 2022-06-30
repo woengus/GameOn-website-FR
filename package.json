@@ -1,0 +1,22 @@
+{
+  "name": "gameon-site-web",
+  "version": "1.0.0",
+  "description": "Créez une landing page avec Javascript",
+  "main": "modal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woengus/GameOn-website-FR.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Olivier Biard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woengus/GameOn-website-FR/issues"
+  },
+  "homepage": "https://github.com/woengus/GameOn-website-FR#readme"
+}
