@@ -527,3 +527,9 @@ footer {
   }
 }
 
+.formData.error small{
+  color:red;
+  border: 1 px solid red;
+  font-weight: 100;
+  font-size: 0.8rem;
+}

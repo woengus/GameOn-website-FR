@@ -28,8 +28,6 @@ const location6 = document.querySelector("#location6");//portland
 //check box de type check box
 const checkbox1 = document.querySelector("#checkbox1");
 const checkbox2 = document.querySelector("#checkbox2");
-//Retourne vrai si l'élément est vide, pour vérifier si prénom et nom sont vides 
-const isRequired = value => value === '' ? false : true;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -39,55 +37,82 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-
 //Au click sur la croix on appelle la function closeModal
 closeBtn.addEventListener("click", closeModal);
 //fermeture de la modal
 function closeModal() {
   modalbg.style.display = "none";
+  document.querySelector("form").reset(); // re initialise le formulaire quand on ferme la modal
   console.log("le click sur la croix fonctionne");
+}
+//fonction pour montre les erreurs
+const showError = (input, message) => {
+  // récupérer l'élément formData
+  const formData = input.parentElement;
+  // ajoute la class error, elnève success
+  formData.classList.remove('success');
+  formData.classList.add('error');
+
+  // montre le message d'erreur
+  const error = formData.querySelector('small');
+  error.textContent = message;
+};
+//fonction pour montrer un message de réussite
+const showSuccess = (input) => {
+  // récuperer l'élément formData
+  const formData = input.parentElement;
+
+  // enlève la class error, ajoute success
+  formData.classList.remove('error');
+  formData.classList.add('success');
+
+  // cache le message d'erreur
+  const error = formData.querySelector('small');
+  error.textContent = '';
 }
 //validation formulaire
 function validate() {
   //location1.checked = true; force la radio 1 cochée par défaut
-  const letters = /[A-zÀ-ú]/; //forcer l'utilisation de lettres uniquement, avec accent, pour nom et prénom
+
+  const letters = /[A-zÀ-ú]/; //regex pour forcer l'utilisation de lettres uniquement, avec ou sans accent, pour nom et prénom
   const  mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ //regex pour la validation de l'adresse mail
-  const maxChoiceRadio = 6; //nombre d'éléments radios pour les villes
 
   if(first.value.length <2 || first.value === "" || !first.value.match(letters)) {
-    console.log("votre prénom doit comporter au moins 2 lettres, sans chiffre.");
-    first.focus();
+    showError(first,"Votre prénom doit comporter au moins 2 lettres, sans chiffre.");
+    first.focus(); //sert à avoir le focus sur l'élément avec une erreur
     return false;
   }
+  else showSuccess(first);
   if(last.value.length <2 || last.value === "" || !last.value.match(letters)) {
-    console.log("votre nom doit comporter au moins 2 lettres, sans chiffre.");
+    showError(last,"Votre nom doit comporter au moins 2 lettres, sans chiffre.");
     last.focus();
     return false;
   }
-  if(!email.value.match(mailRegex)){
-    console.log("Veuillez entrer un mail valide.");
+  else showSuccess(last);
+  if(!email.value.match(mailRegex)){ //on vérifie que l'email est bien valide, en utilisant le regex
+    showError(email, "Veuillez entrer un email valide.");
     email.focus();
     return false;
   }
+  else showSuccess(email);
   if(quantity.value === "") {
-    console.log("Veuillez saisir une valeur numérique, entre 0 et 99.");
+    showError(quantity, "Veuillez saisir une valeur numérique, entre 0 et 99.");
     quantity.focus();
     return false;
   }
-  
+  else showSuccess(quantity);
   //todo: en faire une boucle, vérifie si toutes les radios sont décochées
- 
   if(!location1.checked && !location2.checked && !location3.checked && !location4.checked && !location5.checked && !location6.checked) {
-    console.log("Veuillez choisir une ville");
+    showError(location1, "Veuillez choisir une ville");
     return false;
   }
+  else showSuccess(location1);
   if(!checkbox1.checked) {
-    console.log("Veuillez accepter les conditions d'utilisation" );
+    showError(checkbox1, "Veuillez accepter les conditions d'utilisation" );
     checkbox1.focus();
     return false;
   }
-  
-  
+  else showSuccess(checkbox1);
   alert("Merci pour votre inscription")
   return true;
 }
