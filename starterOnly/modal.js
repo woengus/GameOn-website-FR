@@ -17,23 +17,13 @@ const form = document.querySelector("form");//classe du form
 const first = document.querySelector("#first");//prénom
 const last = document.querySelector("#last");//nom
 const email = document.querySelector("#email");//email
-//const birthdate = document.querySelector("#birthdate");//date de naissance
 const quantity = document.querySelector("#quantity");//nombre de tournois
-//check-box de type radio
-const locations = document.querySelectorAll("input[type=radio]");//
-const location1 = document.querySelector("#location1");//new york
-const location2 = document.querySelector("#location2");//san francisco
-const location3 = document.querySelector("#location3");//seattle
-const location4 = document.querySelector("#location4");//chicago
-const location5 = document.querySelector("#location5");//boston
-const location6 = document.querySelector("#location6");//portland
+const locations = document.querySelectorAll("input[type=radio]");//check-box de type radio
 //check box de type check box
 const checkbox1 = document.querySelector("#checkbox1");
 const checkbox2 = document.querySelector("#checkbox2");
-
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
@@ -75,14 +65,8 @@ form.addEventListener("submit", (e)=> {
 })
 //validation formulaire
 function validate() {
-  let hasErrorFirst = true;
-  let hasErrorLast = true;
-  let hasErrorEmail = true;
-  let hasErrorQuantity = true;
   let hasErrorLocations = true;
-  let hasErrorChecked = true;
   let hasError = false;
-
   const letters = /[A-zÀ-ú]/; //regex pour forcer l'utilisation de lettres uniquement, avec ou sans accent, pour nom et prénom
   const  mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ //regex pour la validation de l'adresse mail
   if(first.value.length <2 || first.value === "" || !first.value.match(letters)) {
@@ -91,7 +75,6 @@ function validate() {
   }
   else {
     showSuccess(first);//montre le message de validation, ici vide
-    
   }
   if(last.value.length <2 || last.value === "" || !last.value.match(letters)) {
     showError(last,"Votre nom doit comporter au moins 2 lettres, sans chiffre.");
@@ -99,7 +82,6 @@ function validate() {
   }
   else {
     showSuccess(last);
-    
   }
   if(!email.value.match(mailRegex)){ //on vérifie que l'email est bien valide, en utilisant le regex
     showError(email, "Veuillez entrer un email valide.");
@@ -107,7 +89,6 @@ function validate() {
   }
   else {
     showSuccess(email);
-   
   }
   if(quantity.value === "" || quantity.value > 99) {
     showError(quantity, "Veuillez saisir une valeur numérique, entre 0 et 99.");
@@ -115,7 +96,6 @@ function validate() {
   }
   else {
     showSuccess(quantity);
-   
   }
   //todo: en faire une boucle, vérifie si toutes les radios sont décochées
   /*if(!location1.checked && !location2.checked && !location3.checked && !location4.checked && !location5.checked && !location6.checked) {
@@ -125,7 +105,6 @@ function validate() {
   else showSuccess(location1);*/
   for (let i = 0; i < locations.length; i++) {
     if(locations[i].checked) {
-      
       console.log(locations[i].checked);
       hasErrorLocations = false;
       showSuccess(locations[i])
@@ -142,6 +121,7 @@ function validate() {
   else {
     showSuccess(checkbox1);
   }
+  //tant qu'on a une erreur, on ne valide pas le formulaire
   if(
     hasError == true 
     || hasErrorLocations == true
