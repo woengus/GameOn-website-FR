@@ -183,7 +183,7 @@ main {
   padding-top: 10px;
 }
 
-.modal-body {
+.modal-body , .formConfirmation{
   padding: 15px 8%;
   margin: 15px auto;
 }
@@ -526,10 +526,20 @@ footer {
     opacity: 1;
   }
 }
-
+/*erreurs du form */
 .formData.error small{
   color:red;
-  border: 1 px solid red;
   font-weight: 100;
   font-size: 0.8rem;
+}
+/*confirmation*/
+
+.formConfirmation {
+    padding: 15px 8%;
+    margin: 15px auto;
+    display: none;
+}
+.thanks {
+  padding: 15rem 2rem;
+  text-align: center;
 }

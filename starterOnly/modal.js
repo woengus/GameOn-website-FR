@@ -12,7 +12,8 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close"); //bouton croix sur la modal
-const form = document.querySelectorAll("#form");//classe du form
+const closeBtn2 = document.querySelector(".btn-submit");//bouton fermer après validation du formulaire
+const form = document.querySelector("form");//classe du form
 const first = document.querySelector("#first");//prénom
 const last = document.querySelector("#last");//nom
 const email = document.querySelector("#email");//email
@@ -37,19 +38,19 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-//Au click sur la croix on appelle la function closeModal
+//Au click sur la croix ou le bouton fermer on appelle la function closeModal
 closeBtn.addEventListener("click", closeModal);
+closeBtn2.addEventListener("click", closeModal);
 //fermeture de la modal
 function closeModal() {
   modalbg.style.display = "none";
   document.querySelector("form").reset(); // re initialise le formulaire quand on ferme la modal
-  console.log("le click sur la croix fonctionne");
 }
 //fonction pour montre les erreurs
 const showError = (input, message) => {
   // récupérer l'élément formData
   const formData = input.parentElement;
-  // ajoute la class error, elnève success
+  // ajoute la class error, enlève success
   formData.classList.remove('success');
   formData.classList.add('error');
 
@@ -57,7 +58,7 @@ const showError = (input, message) => {
   const error = formData.querySelector('small');
   error.textContent = message;
 };
-//fonction pour montrer un message de réussite
+//fonction pour montrer un message de réussite (ici vide)
 const showSuccess = (input) => {
   // récuperer l'élément formData
   const formData = input.parentElement;
@@ -70,13 +71,15 @@ const showSuccess = (input) => {
   const error = formData.querySelector('small');
   error.textContent = '';
 }
+//empêche le formulaire de changer de page au submit
+form.addEventListener("submit", (e)=> {
+  e.preventDefault();
+  console.log("test");
+})
 //validation formulaire
 function validate() {
-  //location1.checked = true; force la radio 1 cochée par défaut
-
   const letters = /[A-zÀ-ú]/; //regex pour forcer l'utilisation de lettres uniquement, avec ou sans accent, pour nom et prénom
   const  mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ //regex pour la validation de l'adresse mail
-
   if(first.value.length <2 || first.value === "" || !first.value.match(letters)) {
     showError(first,"Votre prénom doit comporter au moins 2 lettres, sans chiffre.");
     first.focus(); //sert à avoir le focus sur l'élément avec une erreur
@@ -95,7 +98,7 @@ function validate() {
     return false;
   }
   else showSuccess(email);
-  if(quantity.value === "") {
+  if(quantity.value === "" || quantity.value > 99) {
     showError(quantity, "Veuillez saisir une valeur numérique, entre 0 et 99.");
     quantity.focus();
     return false;
@@ -108,11 +111,11 @@ function validate() {
   }
   else showSuccess(location1);
   if(!checkbox1.checked) {
-    showError(checkbox1, "Veuillez accepter les conditions d'utilisation" );
+    showError(checkbox1, "Pour valider l'inscription, veuillez accepter les conditions d'utilisation" );
     checkbox1.focus();
     return false;
   }
   else showSuccess(checkbox1);
-  alert("Merci pour votre inscription")
-  return true;
+  document.querySelector(".modal-body").style.display = "none"; //enleve l'affichage du formulaire
+  document.querySelector(".formConfirmation").style.display = "block"; //affiche le message de validation
 }
