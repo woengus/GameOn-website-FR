@@ -70,14 +70,14 @@ function validate() {
   const letters = /[A-zÀ-ú]/; //regex pour forcer l'utilisation de lettres uniquement, avec ou sans accent, pour nom et prénom
   const  mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ //regex pour la validation de l'adresse mail
   if(first.value.length <2 || first.value === "" || !first.value.match(letters)) {
-    showError(first,"Votre prénom doit comporter au moins 2 lettres, sans chiffre.");
+    showError(first,"Votre prénom doit comporter au moins 2 lettres.");
     hasError = true;
   }
   else {
     showSuccess(first);//montre le message de validation, ici vide
   }
   if(last.value.length <2 || last.value === "" || !last.value.match(letters)) {
-    showError(last,"Votre nom doit comporter au moins 2 lettres, sans chiffre.");
+    showError(last,"Votre nom doit comporter au moins 2 lettres.");
     hasError = true;
   }
   else {
@@ -97,25 +97,20 @@ function validate() {
   else {
     showSuccess(quantity);
   }
-  //todo: en faire une boucle, vérifie si toutes les radios sont décochées
-  /*if(!location1.checked && !location2.checked && !location3.checked && !location4.checked && !location5.checked && !location6.checked) {
-    showError(location1, "Veuillez choisir une ville");
-    //return false;
-  }
-  else showSuccess(location1);*/
+  //boucle qui vérifie si un des locations est checked
   for (let i = 0; i < locations.length; i++) {
     if(locations[i].checked) {
-      console.log(locations[i].checked);
+      //console.log(locations[i].checked);
       hasErrorLocations = false;
       showSuccess(locations[i])
       break
     }
   }
   if (hasErrorLocations) {
-    showError(locations[0], "Veuillez choisir une ville");
+    showError(locations[0], "Veuillez choisir une ville.");
   }
   if(!checkbox1.checked) {
-    showError(checkbox1, "Pour valider l'inscription, veuillez accepter les conditions d'utilisation" );
+    showError(checkbox1, "Pour valider l'inscription, veuillez accepter les conditions d'utilisation." );
     hasError = true;
   }
   else {
