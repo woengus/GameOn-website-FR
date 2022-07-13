@@ -17,6 +17,7 @@ const form = document.querySelector("form");//classe du form
 const first = document.querySelector("#first");//prénom
 const last = document.querySelector("#last");//nom
 const email = document.querySelector("#email");//email
+const birthdate = document.querySelector("#birthdate")//date de naissance
 const quantity = document.querySelector("#quantity");//nombre de tournois
 const locations = document.querySelectorAll("input[type=radio]");//check-box de type radio
 //check box de type check box
@@ -89,6 +90,13 @@ function validate() {
   }
   else {
     showSuccess(email);
+  }
+  if(!birthdate.value) {
+    showError(birthdate, "Veuillez saisir une date de naissance.")
+    hasError = true
+  }
+  else {
+    showSuccess(birthdate);
   }
   if(quantity.value === "" || quantity.value > 99) {
     showError(quantity, "Veuillez saisir une valeur numérique, entre 0 et 99.");
